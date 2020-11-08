@@ -439,7 +439,6 @@ class Application(Frame):
             self.units_scale = 25.4
         
         self.statusMessage = StringVar()
-        self.statusMessage.set("Welcome to K40 Boncesperer")
         
         
         self.Reng_time.set("0")
@@ -456,7 +455,7 @@ class Application(Frame):
 
         # make a Status Bar
         self.statusbar = Label(self.master, textvariable=self.statusMessage, 
-                                   bd=1, relief=SUNKEN , height=1)
+                                   bd=1, relief=FLAT , height=1)
         self.statusbar.pack(anchor=SW, fill=X, side=BOTTOM)
         
 
@@ -477,10 +476,10 @@ class Application(Frame):
         self.PreviewCanvas.tag_bind('LaserDot',"<ButtonRelease-3>", self.right_mousePanStop)
 
         # Left Column #
-        self.separator1 = Frame(self.master, height=2, bd=1, relief=SUNKEN)
-        self.separator2 = Frame(self.master, height=2, bd=1, relief=SUNKEN)
-        self.separator3 = Frame(self.master, height=2, bd=1, relief=SUNKEN)
-        self.separator4 = Frame(self.master, height=2, bd=1, relief=SUNKEN)
+        self.separator1 = Frame(self.master, height=2, bd=1, relief=FLAT, bg="grey95")
+        self.separator2 = Frame(self.master, height=2, bd=1, relief=FLAT, bg="grey95")
+        self.separator3 = Frame(self.master, height=2, bd=1, relief=FLAT, bg="grey95")
+        self.separator4 = Frame(self.master, height=2, bd=1, relief=FLAT, bg="grey95")
         
         self.Label_Reng_feed_u = Label(self.master,textvariable=self.funits, anchor=W)
         self.Entry_Reng_feed   = Entry(self.master,width="15")
@@ -511,7 +510,6 @@ class Application(Frame):
         self.Veng_Vcut_Button      = Button(self.master,text="Vector Engrave\nand Cut", command=self.Vector_Eng_Cut, bg="grey90", borderwidth=0)
         self.Reng_Veng_Vcut_Button = Button(self.master,text="Raster Engrave\nVector Engrave\nand\nVector Cut", command=self.Raster_Vector_Cut, bg="grey90", borderwidth=0)
         
-        self.Label_Position_Control = Label(self.master,text="Position Controls:", anchor=W)
         
         self.Initialize_Button = Button(self.master,text="Initialize Laser Cutter", command=self.Initialize_Laser, bg="grey90", borderwidth=0)
 
@@ -579,9 +577,9 @@ class Application(Frame):
         # End Left Column #
 
         # Advanced Column     #
-        self.separator_vert = Frame(self.master, height=2, bd=1, relief=SUNKEN)
+        self.separator_vert = Frame(self.master, height=2, bd=1, relief=FLAT)
         self.Label_Advanced_column = Label(self.master,text="Advanced Settings",anchor=CENTER)
-        self.separator_adv = Frame(self.master, height=2, bd=1, relief=SUNKEN)       
+        self.separator_adv = Frame(self.master, height=2, bd=1, relief=FLAT)       
 
         self.Label_Halftone_adv = Label(self.master,text="Halftone (Dither)")
         self.Checkbutton_Halftone_adv = Checkbutton(self.master,text=" ", anchor=W)
@@ -593,7 +591,7 @@ class Application(Frame):
         self.Checkbutton_Negate_adv.configure(variable=self.negate)
         self.negate.trace_variable("w", self.View_Refresh_and_Reset_RasterPath)
 
-        self.separator_adv2 = Frame(self.master, height=2, bd=1, relief=SUNKEN)  
+        self.separator_adv2 = Frame(self.master, height=2, bd=1, relief=FLAT)  
 
         self.Label_Mirror_adv = Label(self.master,text="Mirror Design")
         self.Checkbutton_Mirror_adv = Checkbutton(self.master,text=" ", anchor=W)
@@ -605,7 +603,7 @@ class Application(Frame):
         self.Checkbutton_Rotate_adv.configure(variable=self.rotate)
         self.rotate.trace_variable("w", self.View_Refresh_and_Reset_RasterPath)
 
-        self.separator_adv3 = Frame(self.master, height=2, bd=1, relief=SUNKEN)
+        self.separator_adv3 = Frame(self.master, height=2, bd=1, relief=FLAT)
         
         self.Label_inputCSYS_adv = Label(self.master,text="Use Input CSYS")
         self.Checkbutton_inputCSYS_adv = Checkbutton(self.master,text=" ", anchor=W)
@@ -628,7 +626,7 @@ class Application(Frame):
 
 
         #####
-        self.separator_comb = Frame(self.master, height=2, bd=1, relief=SUNKEN)  
+        self.separator_comb = Frame(self.master, height=2, bd=1, relief=FLAT)  
 
         self.Label_Comb_Engrave_adv = Label(self.master,text="Group Engrave Tasks")
         self.Checkbutton_Comb_Engrave_adv = Checkbutton(self.master,text=" ", anchor=W)
@@ -677,7 +675,7 @@ class Application(Frame):
         self.Entry_ContAngle = Entry()
 
         # Make Menu Bar
-        self.menuBar = Menu(self.master, relief = "raised", bd=2)
+        self.menuBar = Menu(self.master, relief = "flat", bd=2)
 
         top_File = Menu(self.menuBar, tearoff=0)
         top_File.add("command", label = "Save Settings File", command = self.menu_File_Save)
@@ -3906,11 +3904,6 @@ class Application(Frame):
                 self.Reload_Button.place(x=12+100, y=Yloc, width=100, height=40)                
                 if h>=560:
                     Yloc=Yloc+50
-                    self.separator1.place(x=x_label_L, y=Yloc,width=w_label+75+40, height=2)
-                    Yloc=Yloc+6
-                    self.Label_Position_Control.place(x=x_label_L, y=Yloc, width=w_label*2, height=21)
-
-                    Yloc=Yloc+25
                     self.Home_Button.place (x=12, y=Yloc, width=100, height=23)
                     self.UnLock_Button.place(x=12+100, y=Yloc, width=100, height=23)
 
@@ -3935,7 +3928,6 @@ class Application(Frame):
                     self.Down_Button.place  (x=xoffst+12+bsz  ,  y=Yloc, width=bsz, height=bsz)
                     self.LR_Button.place    (x=xoffst+12+bsz*2,  y=Yloc, width=bsz, height=bsz)
             
-                
                     Yloc=Yloc+bsz
                     ###########################################################################
                     self.Label_GoToX.place(x=x_entry_L, y=Yloc, width=w_entry, height=23)
@@ -3948,11 +3940,8 @@ class Application(Frame):
                 else:
                     ###########################################################################
                     self.separator1.place_forget()
-                    self.Label_Position_Control.place_forget()
                     ##    
                     Yloc=Yloc+50
-                    self.separator1.place(x=x_label_L, y=Yloc,width=w_label+75+40, height=2)
-                    Yloc=Yloc+6
                     self.Home_Button.place (x=12, y=Yloc, width=100, height=23)
                     self.UnLock_Button.place(x=12+100, y=Yloc, width=100, height=23)
                     ##
@@ -4743,7 +4732,7 @@ class Application(Frame):
         self.Checkbutton_Preprocess_CRC.configure(variable=self.pre_pr_crc)
 
         D_Yloc=D_Yloc+D_dY*1.25
-        self.gen_separator1 = Frame(gen_settings, height=2, bd=1, relief=SUNKEN)
+        self.gen_separator1 = Frame(gen_settings, height=2, bd=1, relief=FLAT)
         self.gen_separator1.place(x=xd_label_L, y=D_Yloc,width=gen_width-40, height=2)
 
         D_Yloc=D_Yloc+D_dY*.25
@@ -4774,7 +4763,7 @@ class Application(Frame):
         self.entry_set(self.Entry_Ink_Timeout,self.Entry_Ink_Timeout_Check(),2)
 
         D_Yloc=D_Yloc+D_dY*1.25
-        self.gen_separator2 = Frame(gen_settings, height=2, bd=1, relief=SUNKEN)
+        self.gen_separator2 = Frame(gen_settings, height=2, bd=1, relief=FLAT)
         self.gen_separator2.place(x=xd_label_L, y=D_Yloc,width=gen_width-40, height=2)
 
         D_Yloc=D_Yloc+D_dY*.5
@@ -4967,7 +4956,7 @@ class Application(Frame):
         self.bezier_weight.trace_variable("w", self.bezier_weight_Callback)
 
         # Bezier Canvas
-        self.Bezier_frame = Frame(raster_settings, bd=1, relief=SUNKEN)
+        self.Bezier_frame = Frame(raster_settings, bd=1, relief=FLAT)
         self.Bezier_frame.place(x=Wset-280, y=10, height=265, width=265)
         self.BezierCanvas = Canvas(self.Bezier_frame, background="white")
         self.BezierCanvas.pack(side=LEFT, fill=BOTH, expand=1)
