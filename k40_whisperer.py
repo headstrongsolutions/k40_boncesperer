@@ -126,7 +126,7 @@ class Application(Frame):
         Frame.__init__(self, master)
         self.w = 780
         self.h = 490
-        frame = Frame(master, width= self.w, height=self.h)
+        frame = Frame(master, width= self.w, height=self.h, bg='red')
         self.master = master
         self.x = -1
         self.y = -1
@@ -484,43 +484,43 @@ class Application(Frame):
         
         self.Label_Reng_feed_u = Label(self.master,textvariable=self.funits, anchor=W)
         self.Entry_Reng_feed   = Entry(self.master,width="15")
-        self.Entry_Reng_feed.configure(textvariable=self.Reng_feed,justify='center',fg="black")
+        self.Entry_Reng_feed.configure(textvariable=self.Reng_feed,justify='center',fg="black", bg="white", borderwidth=0)
         self.Reng_feed.trace_variable("w", self.Entry_Reng_feed_Callback)
         self.NormalColor =  self.Entry_Reng_feed.cget('bg')
 
         self.Label_Veng_feed_u = Label(self.master,textvariable=self.funits, anchor=W)
         self.Entry_Veng_feed   = Entry(self.master,width="15")
-        self.Entry_Veng_feed.configure(textvariable=self.Veng_feed,justify='center',fg="blue")
+        self.Entry_Veng_feed.configure(textvariable=self.Veng_feed,justify='center',fg="blue", bg="white", borderwidth=0)
         self.Veng_feed.trace_variable("w", self.Entry_Veng_feed_Callback)
         self.NormalColor =  self.Entry_Veng_feed.cget('bg')
 
         self.Label_Vcut_feed_u = Label(self.master,textvariable=self.funits, anchor=W)
         self.Entry_Vcut_feed   = Entry(self.master,width="15")
-        self.Entry_Vcut_feed.configure(textvariable=self.Vcut_feed,justify='center',fg="red")
+        self.Entry_Vcut_feed.configure(textvariable=self.Vcut_feed,justify='center',fg="red", bg="white", borderwidth=0)
         self.Vcut_feed.trace_variable("w", self.Entry_Vcut_feed_Callback)
         self.NormalColor =  self.Entry_Vcut_feed.cget('bg')
 
         # Buttons
-        self.Reng_Button  = Button(self.master,text="Raster Engrave", command=self.Raster_Eng)
-        self.Veng_Button  = Button(self.master,text="Vector Engrave", command=self.Vector_Eng)
-        self.Vcut_Button  = Button(self.master,text="Vector Cut"    , command=self.Vector_Cut)
-        self.Grun_Button  = Button(self.master,text="Run G-Code"    , command=self.Gcode_Cut)
+        self.Reng_Button  = Button(self.master,text="Raster Engrave", command=self.Raster_Eng, bg="grey90", borderwidth=0)
+        self.Veng_Button  = Button(self.master,text="Vector Engrave", command=self.Vector_Eng, bg="grey90", borderwidth=0)
+        self.Vcut_Button  = Button(self.master,text="Vector Cut"    , command=self.Vector_Cut, bg="grey90", borderwidth=0)
+        self.Grun_Button  = Button(self.master,text="Run G-Code"    , command=self.Gcode_Cut, bg="grey90", borderwidth=0)
 
 
-        self.Reng_Veng_Button      = Button(self.master,text="Raster and\nVector Engrave", command=self.Raster_Vector_Eng)
-        self.Veng_Vcut_Button      = Button(self.master,text="Vector Engrave\nand Cut", command=self.Vector_Eng_Cut)
-        self.Reng_Veng_Vcut_Button = Button(self.master,text="Raster Engrave\nVector Engrave\nand\nVector Cut", command=self.Raster_Vector_Cut)
+        self.Reng_Veng_Button      = Button(self.master,text="Raster and\nVector Engrave", command=self.Raster_Vector_Eng, bg="grey90", borderwidth=0)
+        self.Veng_Vcut_Button      = Button(self.master,text="Vector Engrave\nand Cut", command=self.Vector_Eng_Cut, bg="grey90", borderwidth=0)
+        self.Reng_Veng_Vcut_Button = Button(self.master,text="Raster Engrave\nVector Engrave\nand\nVector Cut", command=self.Raster_Vector_Cut, bg="grey90", borderwidth=0)
         
         self.Label_Position_Control = Label(self.master,text="Position Controls:", anchor=W)
         
-        self.Initialize_Button = Button(self.master,text="Initialize Laser Cutter", command=self.Initialize_Laser)
+        self.Initialize_Button = Button(self.master,text="Initialize Laser Cutter", command=self.Initialize_Laser, bg="grey90", borderwidth=0)
 
-        self.Open_Button       = Button(self.master,text="Open\nDesign File",   command=self.menu_File_Open_Design)
-        self.Reload_Button     = Button(self.master,text="Reload\nDesign File", command=self.menu_Reload_Design)
+        self.Open_Button       = Button(self.master,text="Open\nDesign File",   command=self.menu_File_Open_Design, bg="grey90", borderwidth=0)
+        self.Reload_Button     = Button(self.master,text="Reload\nDesign File", command=self.menu_Reload_Design, bg="grey90", borderwidth=0)
         
-        self.Home_Button       = Button(self.master,text="Home",            command=self.Home)
-        self.UnLock_Button     = Button(self.master,text="Unlock Rail",     command=self.Unlock)
-        self.Stop_Button       = Button(self.master,text="Pause/Stop",      command=self.Stop)
+        self.Home_Button       = Button(self.master,text="Home",            command=self.Home, bg="grey90", borderwidth=0)
+        self.UnLock_Button     = Button(self.master,text="Unlock Rail",     command=self.Unlock, bg="grey90", borderwidth=0)
+        self.Stop_Button       = Button(self.master,text="Pause/Stop",      command=self.Stop, bg="light coral", borderwidth=0)
 
         try:
             self.left_image  = self.Imaging_Free(Image.open("left.png"),bg=None)
@@ -528,10 +528,10 @@ class Application(Frame):
             self.up_image    = self.Imaging_Free(Image.open("up.png"),bg=None)
             self.down_image  = self.Imaging_Free(Image.open("down.png"),bg=None)
             
-            self.Right_Button   = Button(self.master,image=self.right_image, command=self.Move_Right)
-            self.Left_Button    = Button(self.master,image=self.left_image,  command=self.Move_Left)
-            self.Up_Button      = Button(self.master,image=self.up_image,    command=self.Move_Up)
-            self.Down_Button    = Button(self.master,image=self.down_image,  command=self.Move_Down)
+            self.Right_Button   = Button(self.master,image=self.right_image, command=self.Move_Right, bg="grey90", borderwidth=0)
+            self.Left_Button    = Button(self.master,image=self.left_image,  command=self.Move_Left, bg="grey90", borderwidth=0)
+            self.Up_Button      = Button(self.master,image=self.up_image,    command=self.Move_Up, bg="grey90", borderwidth=0)
+            self.Down_Button    = Button(self.master,image=self.down_image,  command=self.Move_Down, bg="grey90", borderwidth=0)
 
             self.UL_image  = self.Imaging_Free(Image.open("UL.png"),bg=None)
             self.UR_image  = self.Imaging_Free(Image.open("UR.png"),bg=None)
@@ -539,37 +539,37 @@ class Application(Frame):
             self.LL_image  = self.Imaging_Free(Image.open("LL.png"),bg=None)
             self.CC_image  = self.Imaging_Free(Image.open("CC.png"),bg=None)
             
-            self.UL_Button = Button(self.master,image=self.UL_image, command=self.Move_UL)
-            self.UR_Button = Button(self.master,image=self.UR_image, command=self.Move_UR)
-            self.LR_Button = Button(self.master,image=self.LR_image, command=self.Move_LR)
-            self.LL_Button = Button(self.master,image=self.LL_image, command=self.Move_LL)
-            self.CC_Button = Button(self.master,image=self.CC_image, command=self.Move_CC)
+            self.UL_Button = Button(self.master,image=self.UL_image, command=self.Move_UL, bg="grey90", borderwidth=0)
+            self.UR_Button = Button(self.master,image=self.UR_image, command=self.Move_UR, bg="grey90", borderwidth=0)
+            self.LR_Button = Button(self.master,image=self.LR_image, command=self.Move_LR, bg="grey90", borderwidth=0)
+            self.LL_Button = Button(self.master,image=self.LL_image, command=self.Move_LL, bg="grey90", borderwidth=0)
+            self.CC_Button = Button(self.master,image=self.CC_image, command=self.Move_CC, bg="grey90", borderwidth=0)
             
         except:
-            self.Right_Button   = Button(self.master,text=">",          command=self.Move_Right)
-            self.Left_Button    = Button(self.master,text="<",          command=self.Move_Left)
-            self.Up_Button      = Button(self.master,text="^",          command=self.Move_Up)
-            self.Down_Button    = Button(self.master,text="v",          command=self.Move_Down)
+            self.Right_Button   = Button(self.master,text=">",          command=self.Move_Right, bg="grey90", borderwidth=0)
+            self.Left_Button    = Button(self.master,text="<",          command=self.Move_Left, bg="grey90", borderwidth=0)
+            self.Up_Button      = Button(self.master,text="^",          command=self.Move_Up, bg="grey90", borderwidth=0)
+            self.Down_Button    = Button(self.master,text="v",          command=self.Move_Down, bg="grey90", borderwidth=0)
 
-            self.UL_Button = Button(self.master,text=" ", command=self.Move_UL)
-            self.UR_Button = Button(self.master,text=" ", command=self.Move_UR)
-            self.LR_Button = Button(self.master,text=" ", command=self.Move_LR)
-            self.LL_Button = Button(self.master,text=" ", command=self.Move_LL)
-            self.CC_Button = Button(self.master,text=" ", command=self.Move_CC)
+            self.UL_Button = Button(self.master,text=" ", command=self.Move_UL, bg="grey90", borderwidth=0)
+            self.UR_Button = Button(self.master,text=" ", command=self.Move_UR, bg="grey90", borderwidth=0)
+            self.LR_Button = Button(self.master,text=" ", command=self.Move_LR, bg="grey90", borderwidth=0)
+            self.LL_Button = Button(self.master,text=" ", command=self.Move_LL, bg="grey90", borderwidth=0)
+            self.CC_Button = Button(self.master,text=" ", command=self.Move_CC, bg="grey90", borderwidth=0)
 
         self.Label_Step   = Label(self.master,text="Jog Step", anchor=CENTER )
         self.Label_Step_u = Label(self.master,textvariable=self.units, anchor=W)
         self.Entry_Step   = Entry(self.master,width="15")
-        self.Entry_Step.configure(textvariable=self.jog_step, justify='center')
+        self.Entry_Step.configure(textvariable=self.jog_step, justify='center', bg="white", borderwidth=0)
         self.jog_step.trace_variable("w", self.Entry_Step_Callback)
 
         ###########################################################################
-        self.GoTo_Button    = Button(self.master,text="Move To", command=self.GoTo)
+        self.GoTo_Button    = Button(self.master,text="Move To", command=self.GoTo, bg="grey90", borderwidth=0)
         
-        self.Entry_GoToX   = Entry(self.master,width="15",justify='center')
+        self.Entry_GoToX   = Entry(self.master,width="15",justify='center', bg="white", borderwidth=0)
         self.Entry_GoToX.configure(textvariable=self.gotoX)
         self.gotoX.trace_variable("w", self.Entry_GoToX_Callback)
-        self.Entry_GoToY   = Entry(self.master,width="15",justify='center')
+        self.Entry_GoToY   = Entry(self.master,width="15",justify='center', bg="white", borderwidth=0)
         self.Entry_GoToY.configure(textvariable=self.gotoY)
         self.gotoY.trace_variable("w", self.Entry_GoToY_Callback)
         
@@ -3980,7 +3980,7 @@ class Application(Frame):
                 Yloc = BUinit
                 self.Stop_Button.place (x=12, y=Yloc, width=100*2, height=30)
                 
-                self.Stop_Button.configure(bg='light coral')
+                self.Stop_Button.configure(bg='light coral',borderwidth=0)
                 Yloc=Yloc-10+10
 
                 wadv       = 220 #200
