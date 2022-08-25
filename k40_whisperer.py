@@ -2,7 +2,7 @@
 """
     K40 Whisperer
 
-    Copyright (C) <2017-2022>  <Scorch>
+    Copyright (C) <2017-2020>  <Scorch>
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -15,6 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Notes from Bonce:
+    This was 'forked' at v 0.60 from Scorches public website at: 
+    https://www.scorchworks.com/K40whisperer/k40whisperer.html#download 
+    (When I say forked I mean downloaded, messed with and added to 
+    my github with an upped minor version)
 
 """
 version = '0.60'
@@ -95,6 +101,11 @@ try:
     from PIL import _imaging
 except:
     pass #Don't worry everything will still work
+         # TODO - Bonce - why? would be nice to know for the future 
+         #                generations when they look back at this 
+         #                scarred and desolate landscape to understand
+         #                how they came to live in a sterile and dead
+         #                hellscape.
 
 PYCLIPPER=True
 try:
@@ -287,6 +298,7 @@ class Application(Frame):
 
         self.inkscape_path = StringVar()
         self.batch_path    = StringVar()
+        self.working_dir   = StringVar() 
         self.ink_timeout   = StringVar()
         
         self.t_timeout  = StringVar()
@@ -308,6 +320,8 @@ class Application(Frame):
         ###########################################################################
         #                         INITILIZE VARIABLES                             #
         #    if you want to change a default setting this is the place to do it   #
+        #    TODO - bonce - for every default setting we should have a            #
+        #                   corresponding line in the settings file               #
         ###########################################################################
         self.include_Reng.set(1)
         self.include_Rpth.set(0)
@@ -972,6 +986,7 @@ class Application(Frame):
         header.append('(k40_whisperer_set designfile    \042%s\042 )' %( self.DESIGN_FILE   ))
         header.append('(k40_whisperer_set inkscape_path \042%s\042 )' %( self.inkscape_path.get() ))
         header.append('(k40_whisperer_set batch_path    \042%s\042 )' %( self.batch_path.get() ))
+        header.append('(k40_whisperer_set working_dir    \042%s\042 )' %( self.working_dir.get() ))
 
 
         self.jog_step
@@ -1655,6 +1670,21 @@ class Application(Frame):
             win_id.deiconify()
         except:
             pass
+    
+    def Working_Dir_Click(self, event):
+        self.Working_Dir_Message()
+        win_id=self.grab_current()
+        working_dir = askdirectory(initialdir=self.working_dir.get())
+        if working_dir != "" and working_dir != ():
+            if type(working_dir) is not str:
+                working_dir = working_dir.encode("utf-8")
+            self.working_dir.set(working_dir)
+            
+        try:
+            win_id.withdraw()
+            win_id.deiconify()
+        except:
+            pass
 
     def Inkscape_Path_Message(self, event=None):
         if self.inkscape_warning == False:
@@ -1664,7 +1694,11 @@ class Application(Frame):
             msg3 = "K40 Whisperer will find Inkscape in one of the the standard locations after you install Inkscape."
             message_box(msg1, msg2+msg3)
             
-            
+    def Working_Dir_Message(self, event=None):
+        msg1 = "Default Designs Dir"
+        msg2 = "The defaulted directory to start loading design files."
+        message_box(msg1, msg2)
+
     def Entry_units_var_Callback(self):
         if (self.units.get() == 'in') and (self.funits.get()=='mm/s'):
             self.funits.set('in/min')
@@ -1749,7 +1783,8 @@ class Application(Frame):
     def menu_File_Open_Design(self,event=None):
         if self.GUI_Disabled:
             return
-        init_dir = os.path.dirname(self.DESIGN_FILE)
+        init_dir = self.working_dir.get()
+        print(f"init_dir: {init_dir}")
         if ( not os.path.isdir(init_dir) ):
             init_dir = self.HOME_DIR
 
@@ -2582,7 +2617,10 @@ class Application(Frame):
                          self.inkscape_path.set(line[line.find("inkscape_path"):].split("\042")[1])
                     elif "batch_path"    in line:
                          self.batch_path.set(line[line.find("batch_path"):].split("\042")[1])
-
+                    elif "working_dir"  in line:
+                        match = line[line.find("working_dir"):].split("\042")[1]
+                        self.working_dir.set(line[line.find("working_dir"):].split("\042")[1])
+                        
                          
             except:
                 #Ignoring exeptions during reading data from line 
@@ -4814,7 +4852,19 @@ class Application(Frame):
         self.Entry_Batch_Path = Entry(gen_settings)
         self.Entry_Batch_Path.place(x=Xoption_col3, y=D_Yloc, width=Xoption_width, height=23)
         self.Entry_Batch_Path.configure(textvariable=self.batch_path)
-        
+
+        D_Yloc=D_Yloc+D_dY
+        font_entry_width=215
+        self.Label_Working_Dir = Label(gen_settings,text="Designs folder")
+        self.Label_Working_Dir.place(x=xd_label_L, y=D_Yloc, width=w_label, height=21)
+        self.Entry_Working_Dir = Entry(gen_settings,width="15")
+        self.Entry_Working_Dir.place(x=xd_entry_L, y=D_Yloc, width=font_entry_width, height=23)
+        self.Entry_Working_Dir.configure(textvariable=self.working_dir)
+        self.Entry_Working_Dir.bind('<FocusIn>', self.Working_Dir_Message)
+        self.Working_Dir = Button(gen_settings,text="Select Directory")
+        self.Working_Dir.place(x=xd_entry_L+font_entry_width+10, y=D_Yloc, width=110, height=23)
+        self.Working_Dir.bind("<ButtonRelease-1>", self.Working_Dir_Click)
+
 
         D_Yloc=D_Yloc+D_dY
         self.Label_Preprocess_CRC = Label(gen_settings,text="Preprocess CRC Data")
